@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/texturamadeira"
+    android:orientation="vertical"
+    tools:context=".Activity.EditarPerfilActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EDITAR PERFIL"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Nome"
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditCPF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="CPF: "
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditLogradouro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Lougradouro: "
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditNumero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Número: "
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditBairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Bairro: "
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditSenha1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Digite a senha: "
+                android:inputType="textPassword"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtEditSenha2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Confirme a senha: "
+                android:inputType="textPassword"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/btnGravar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EDITAR"
+                android:layout_marginTop="10dp"
+                app:bootstrapBrand="secondary"
+                app:bootstrapSize="xl"
+                app:buttonMode="regular"
+                app:showOutline="false"
+                app:roundedCorners="true"
+                />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CANCELA"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:bootstrapBrand="danger"
+                app:bootstrapSize="xl"
+                app:buttonMode="regular"
+                app:showOutline="false"
+                app:roundedCorners="true"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
