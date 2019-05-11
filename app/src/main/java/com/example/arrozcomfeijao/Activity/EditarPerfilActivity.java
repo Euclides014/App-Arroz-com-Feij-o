@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.Activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
-import com.example.cursoandroidfirebase2.Classes.Usuario;
-import com.example.cursoandroidfirebase2.DAO.ConfiguracaoFirebase;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Classes.Usuario;
+import com.example.arrozcomfeijao.DAO.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

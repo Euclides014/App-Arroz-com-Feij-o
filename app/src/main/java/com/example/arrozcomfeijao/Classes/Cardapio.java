@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2.Classes;
+package com.example.arrozcomfeijao.Classes;
 
 public class Cardapio {
 

@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2.Adapter;
+package com.example.arrozcomfeijao.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.cursoandroidfirebase2.Classes.Cardapio;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Classes.Cardapio;
+import com.example.arrozcomfeijao.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

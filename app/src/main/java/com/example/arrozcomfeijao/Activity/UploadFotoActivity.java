@@ -1,26 +1,21 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.storage.StorageManager;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.example.cursoandroidfirebase2.DAO.ConfiguracaoFirebase;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.DAO.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

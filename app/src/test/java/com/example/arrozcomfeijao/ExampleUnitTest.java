@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2;
+package com.example.arrozcomfeijao;
 
 import org.junit.Test;
 

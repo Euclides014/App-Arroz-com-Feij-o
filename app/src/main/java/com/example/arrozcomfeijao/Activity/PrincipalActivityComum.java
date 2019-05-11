@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PrincipalActivityComum extends AppCompatActivity {

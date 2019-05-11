@@ -1,22 +1,19 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.Activity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.widget.LinearLayout;
 
-import com.example.cursoandroidfirebase2.Adapter.CardapioAdapter;
-import com.example.cursoandroidfirebase2.Classes.Cardapio;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Adapter.CardapioAdapter;
+import com.example.arrozcomfeijao.Classes.Cardapio;
+import com.example.arrozcomfeijao.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
