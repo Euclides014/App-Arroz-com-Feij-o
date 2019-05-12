@@ -1,4 +1,4 @@
-package com.example.arrozcomfeijao.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,14 +9,14 @@ import android.view.MenuItem;
 import com.example.arrozcomfeijao.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class PrincipalActivityComum extends AppCompatActivity {
+public class PrincipalFuncionario extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal_comum);
+        setContentView(R.layout.activity_principal_atendente);
 
         autenticacao = FirebaseAuth.getInstance();
 
@@ -27,40 +27,38 @@ public class PrincipalActivityComum extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         menu.clear();
-        getMenuInflater().inflate(R.menu.menu_comum, menu);
+        getMenuInflater().inflate(R.menu.menu_func, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_fazer_pedidos){
-
-        }else if (id == R.id.action_sair_comum){
+        if (id == R.id.action_cad_foto_perfil_atend){
+            uploadFotoPerfil();
+        }else if (id == R.id.action_sair_atend){
             deslogarUsuario();
-        }else if (id == R.id.action_ver_cardapio_comum) {
-            chamarCardapio();
-        }else if (id == R.id.action_ver_meu_perfil) {
-            vermeuperfil();
+        }else if (id == R.id.action_ver_meu_perfil){
+            verMeuPerfil();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void chamarCardapio(){
-        Intent intent = new Intent(PrincipalActivityComum.this, cardapioActivity.class);
+    private void uploadFotoPerfil(){
+        Intent intent = new Intent(PrincipalFuncionario.this, UploadFoto.class);
         startActivity(intent);
-        finish();
+
     }
 
-    private void vermeuperfil(){
-        Intent intent = new Intent(PrincipalActivityComum.this, MeuPerfilActivity.class);
+    private void verMeuPerfil(){
+        Intent intent = new Intent(PrincipalFuncionario.this, MeuPerfil.class);
         startActivity(intent);
         finish();
     }
 
     private void deslogarUsuario(){
         autenticacao.signOut();
-        Intent intent = new Intent(PrincipalActivityComum.this, MainActivity.class);
+        Intent intent = new Intent(PrincipalFuncionario.this, Login.class);
         startActivity(intent);
         finish();
     }

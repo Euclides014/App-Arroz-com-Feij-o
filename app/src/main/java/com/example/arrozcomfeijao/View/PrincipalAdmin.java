@@ -1,4 +1,4 @@
-package com.example.arrozcomfeijao.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +9,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.arrozcomfeijao.Classes.Usuario;
+import com.example.arrozcomfeijao.Controller.Usuario;
 import com.example.arrozcomfeijao.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class PrincipalActivity extends AppCompatActivity {
+public class PrincipalAdmin extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
     private DatabaseReference referenciaFirebase;
@@ -29,7 +29,7 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        setContentView(R.layout.activity_principal_admin);
         autenticacao = FirebaseAuth.getInstance();
         referenciaFirebase = FirebaseDatabase.getInstance().getReference();
 
@@ -71,30 +71,30 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void abrirTelaCadastroUsuario(){
-        Intent intent = new Intent(PrincipalActivity.this, cadastroUsuario.class);
+        Intent intent = new Intent(PrincipalAdmin.this, CadastroFuncionario.class);
         startActivity(intent);
     }
 
     private void chamarCardapio(){
-        Intent intent = new Intent(PrincipalActivity.this, cardapioActivity.class);
+        Intent intent = new Intent(PrincipalAdmin.this, Cardapio.class);
         startActivity(intent);
     }
 
     private void verMeuPerfil(){
-        Intent intent = new Intent(PrincipalActivity.this, MeuPerfilActivity.class);
+        Intent intent = new Intent(PrincipalAdmin.this, MeuPerfil.class);
         startActivity(intent);
         finish();
     }
 
     private void deslogarUsuario(){
         autenticacao.signOut();
-        Intent intent = new Intent(PrincipalActivity.this, MainActivity.class);
+        Intent intent = new Intent(PrincipalAdmin.this, Login.class);
         startActivity(intent);
         finish();
     }
 
     private void abrirTelaCadastroProdutos(){
-        //Intent intent = new Intent(PrincipalActivity.this, cadastroUsuario.class);
+        //Intent intent = new Intent(PrincipalAdmin.this, CadastroFuncionario.class);
         //startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.arrozcomfeijao.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
-import com.example.arrozcomfeijao.Classes.Usuario;
-import com.example.arrozcomfeijao.DAO.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
 import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
-public class EditarPerfilActivity extends AppCompatActivity {
+public class EditarPerfil extends AppCompatActivity {
 
     private BootstrapEditText editNome;
     private BootstrapEditText editCPF;
@@ -106,7 +106,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
                     atualizarDados(usuario);
                 }else{
-                    Toast.makeText(EditarPerfilActivity.this, "As senhas não conferem!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditarPerfil.this, "As senhas não conferem!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -120,7 +120,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     private void abrirTelaPrincipal(){
-        Intent intent = new Intent(EditarPerfilActivity.this, MainActivity.class);
+        Intent intent = new Intent(EditarPerfil.this, Login.class);
         startActivity(intent);
         finish();
     }
@@ -132,7 +132,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             reference = ConfiguracaoFirebase.getFirebase().child("usuarios");
             atualizarSenha(usuario.getSenha());
             reference.child(txtkeyUsuario).setValue(usuario);
-            Toast.makeText(EditarPerfilActivity.this, "Dados alterados com sucesso!", Toast.LENGTH_LONG).show();
+            Toast.makeText(EditarPerfil.this, "Dados alterados com sucesso!", Toast.LENGTH_LONG).show();
             abrirTelaPrincipal();
 
         }catch (Exception e){

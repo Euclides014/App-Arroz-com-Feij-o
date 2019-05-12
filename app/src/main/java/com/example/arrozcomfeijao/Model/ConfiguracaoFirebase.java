@@ -1,4 +1,4 @@
-package com.example.arrozcomfeijao.DAO;
+package com.example.arrozcomfeijao.Model;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

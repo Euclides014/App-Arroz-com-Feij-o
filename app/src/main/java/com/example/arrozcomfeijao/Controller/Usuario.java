@@ -1,4 +1,4 @@
-package com.example.arrozcomfeijao.Classes;
+package com.example.arrozcomfeijao.Controller;
 
 import com.google.firebase.database.Exclude;
 

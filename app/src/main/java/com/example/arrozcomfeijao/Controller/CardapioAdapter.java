@@ -1,4 +1,4 @@
-package com.example.arrozcomfeijao.Adapter;
+package com.example.arrozcomfeijao.Controller;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.arrozcomfeijao.Classes.Cardapio;
 import com.example.arrozcomfeijao.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,15 +24,15 @@ import java.util.List;
 
 public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHolder> {
 
-    private List<Cardapio> mCardapioList;
+    private List<CardapioController> mCardapioControllerList;
     private Context context;
     private DatabaseReference referenciaFirebase;
-    private List<Cardapio> cardapios;
-    private Cardapio todosprodutos;
+    private List<CardapioController> cardapioControllers;
+    private CardapioController todosprodutos;
 
-    public CardapioAdapter(List<Cardapio> l, Context c){
+    public CardapioAdapter(List<CardapioController> l, Context c){
         context = c;
-        mCardapioList = l;
+        mCardapioControllerList = l;
     }
 
     @Override
@@ -45,18 +44,18 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
     @Override
     public void onBindViewHolder(final CardapioAdapter.ViewHolder holder, int position) {
 
-        final Cardapio item = mCardapioList.get(position);
+        final CardapioController item = mCardapioControllerList.get(position);
 
-        cardapios = new ArrayList<>();
+        cardapioControllers = new ArrayList<>();
 
         referenciaFirebase = FirebaseDatabase.getInstance().getReference();
-        referenciaFirebase.child("cardapio").orderByChild("keyProduto").equalTo(item.getKeyProduto()).addValueEventListener(new ValueEventListener() {
+        referenciaFirebase.child("CardapioController").orderByChild("keyProduto").equalTo(item.getKeyProduto()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                cardapios.clear();
+                cardapioControllers.clear();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-                    todosprodutos = postSnapshot.getValue(Cardapio.class);
-                    cardapios.add(todosprodutos);
+                    todosprodutos = postSnapshot.getValue(CardapioController.class);
+                    cardapioControllers.add(todosprodutos);
 
                     DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
                     final int height = (displayMetrics.heightPixels /4);
@@ -87,7 +86,7 @@ public class CardapioAdapter extends RecyclerView.Adapter<CardapioAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mCardapioList.size();
+        return mCardapioControllerList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

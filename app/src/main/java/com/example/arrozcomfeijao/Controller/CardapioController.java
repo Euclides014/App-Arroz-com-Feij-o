@@ -1,6 +1,6 @@
-package com.example.arrozcomfeijao.Classes;
+package com.example.arrozcomfeijao.Controller;
 
-public class Cardapio {
+public class CardapioController {
 
     private String keyProduto;
     private String descricao;

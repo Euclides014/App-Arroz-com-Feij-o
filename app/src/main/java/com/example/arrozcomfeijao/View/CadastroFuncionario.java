@@ -1,17 +1,18 @@
-package com.example.arrozcomfeijao.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
-import com.example.arrozcomfeijao.Classes.Usuario;
-import com.example.arrozcomfeijao.DAO.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.Helper.Preferencias;
 import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,42 +24,46 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class cadastroUsuarioComumActivity extends AppCompatActivity {
+public class CadastroFuncionario extends AppCompatActivity {
 
     private BootstrapEditText email;
     private BootstrapEditText senha1;
     private BootstrapEditText senha2;
     private BootstrapEditText nome;
+    private RadioButton rbAdmin;
+    private RadioButton rbAtend;
+    private BootstrapButton btnCadastrar;
+    private BootstrapButton btnCancelar;
+    private FirebaseAuth autenticacao;
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
     private BootstrapEditText CPF;
     private BootstrapEditText rua;
     private BootstrapEditText numero;
     private BootstrapEditText bairro;
     private RadioButton rbFeminino;
     private RadioButton rbMasculino;
-    private BootstrapButton btnCadastrar;
-    private BootstrapButton btnCancelar;
-    private FirebaseAuth autenticacao;
-    private FirebaseDatabase database;
-    private DatabaseReference reference;
     private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_usuario_comum);
+        setContentView(R.layout.activity_cadastro_funcionario);
 
         email = (BootstrapEditText) findViewById(R.id.edtCadEmail);
-        CPF = (BootstrapEditText) findViewById(R.id.edtCadCPF);
-        rua = (BootstrapEditText) findViewById(R.id.edtCadRua);
-        numero = (BootstrapEditText) findViewById(R.id.edtCadNumero);
-        bairro = (BootstrapEditText) findViewById(R.id.edtCadBairro);
         senha1 = (BootstrapEditText) findViewById(R.id.edtCadSenha1);
         senha2 = (BootstrapEditText) findViewById(R.id.edtCadSenha2);
         nome = (BootstrapEditText) findViewById(R.id.edtCadNome);
-        rbFeminino = (RadioButton) findViewById(R.id.rbFeminino);
-        rbMasculino = (RadioButton) findViewById(R.id.rbMasculino);
+        CPF = (BootstrapEditText) findViewById(R.id.edtCadCPFUsuario);
+        rua = (BootstrapEditText) findViewById(R.id.edtCadRuaUsuario);
+        numero = (BootstrapEditText) findViewById(R.id.edtCadNumeroUsuario);
+        bairro = (BootstrapEditText) findViewById(R.id.edtCadBairroUsuario);
+        rbAdmin = (RadioButton) findViewById(R.id.rbAdmin);
+        rbAtend = (RadioButton) findViewById(R.id.rbAtend);
         btnCadastrar = (BootstrapButton) findViewById(R.id.btnCadastrar);
         btnCancelar = (BootstrapButton) findViewById(R.id.btnCancela);
+        rbFeminino = (RadioButton) findViewById(R.id.rbFemale);
+        rbMasculino = (RadioButton) findViewById(R.id.rbMale);
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,17 +77,20 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
                     usuario.setRua(rua.getText().toString());
                     usuario.setNumero(numero.getText().toString());
                     usuario.setBairro(bairro.getText().toString());
-                    usuario.setTipo("Comum");
 
-                    if(rbFeminino.isChecked()){
-                        usuario.setSexo("Feminino");
+                    if(rbAdmin.isChecked()){
+                        usuario.setTipo("Administrador");
+                    }else if(rbAtend.isChecked()){
+                        usuario.setTipo("Atendente");
                     }else if(rbMasculino.isChecked()){
                         usuario.setSexo("Masculino");
+                    }else if(rbFeminino.isChecked()){
+                        usuario.setSexo("Feminino");
                     }
 
                     cadUsuario();
                 }else{
-                    Toast.makeText(cadastroUsuarioComumActivity.this, "As senha não se correspondem", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CadastroFuncionario.this, "As senha não se correspondem", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -94,12 +102,16 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),
                 usuario.getSenha()
-        ).addOnCompleteListener(cadastroUsuarioComumActivity.this, new OnCompleteListener<AuthResult>() {
+        ).addOnCompleteListener(CadastroFuncionario.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     insereUsuario(usuario);
-
+                    finish();
+                    //deslogar ao adicionar o usuario
+                    autenticacao.signOut();
+                    //para abrir a tela principal após a reautenticacao
+                    abreTelaPrincipal();
                 }else {
 
                     String erroExcecao = "";
@@ -118,7 +130,7 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(cadastroUsuarioComumActivity.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
+                    Toast.makeText(CadastroFuncionario.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
                 }
             }
         });
@@ -129,23 +141,35 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
             reference = ConfiguracaoFirebase.getFirebase().child("usuarios");
             String key = reference.push().getKey();
             usuario.setKeyUsuario(key);
-            reference.child(key).setValue(usuario);
-            Toast.makeText(cadastroUsuarioComumActivity.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-            abriLoginUsuario();
+            reference.push().setValue(usuario);
+            Toast.makeText(CadastroFuncionario.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
             return true;
         }catch (Exception e){
-            Toast.makeText(cadastroUsuarioComumActivity.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroFuncionario.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return  false;
         }
     }
 
-    private void abriLoginUsuario(){
+    private void abreTelaPrincipal(){
+        autenticacao = ConfiguracaoFirebase.getFirebaseAuth();
+        Preferencias preferencias = new Preferencias(CadastroFuncionario.this);
+        autenticacao.signInWithEmailAndPassword(preferencias.getEmailUsuarioLogado(), preferencias.getSenhaUsuarioLogado()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
-        Intent intent = new Intent(cadastroUsuarioComumActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-
+                if (task.isSuccessful()){
+                    Intent intent = new Intent(CadastroFuncionario.this, PrincipalAdmin.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(CadastroFuncionario.this, "Falha", Toast.LENGTH_LONG).show();
+                    autenticacao.signOut();
+                    Intent intent = new Intent(CadastroFuncionario.this, Login.class);
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }
-
