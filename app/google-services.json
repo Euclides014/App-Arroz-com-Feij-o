@@ -1,52 +1,45 @@
 {
   "project_info": {
-    "project_number": "697402363544",
-    "firebase_url": "https://cursoandroidfirebase-17737.firebaseio.com",
-    "project_id": "cursoandroidfirebase-17737",
-    "storage_bucket": "cursoandroidfirebase-17737.appspot.com"
+    "project_number": "713071881264",
+    "firebase_url": "https://arrozcomfeijao-375e9.firebaseio.com",
+    "project_id": "arrozcomfeijao-375e9",
+    "storage_bucket": "arrozcomfeijao-375e9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:697402363544:android:6e6a2a015a12684f",
+        "mobilesdk_app_id": "1:713071881264:android:7bce6d8d10d85c49",
         "android_client_info": {
-          "package_name": "com.example.cursoandroidfirebase2"
+          "package_name": "com.example.arrozcomfeijao"
         }
       },
       "oauth_client": [
         {
-          "client_id": "697402363544-dif8u6n7qr8pokb79gtigmfq7b8ril40.apps.googleusercontent.com",
+          "client_id": "713071881264-ni6g4bjeebkjc3kpeisi84vu06k0np5j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.cursoandroidfirebase2",
-            "certificate_hash": "e27f30dfd17a19a339af6bcf03c394d13f9b11d2"
+            "package_name": "com.example.arrozcomfeijao",
+            "certificate_hash": "e78a38d9a85e51e1534c48b9f2e153c79182bfd7"
           }
         },
         {
-          "client_id": "697402363544-8ptgik0rp1elke7fglmb3q8d3mlt3m6i.apps.googleusercontent.com",
+          "client_id": "713071881264-nb4nhgjs95mbn6dclek81b60bmjb37cr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAJYCs4teJhg2gKxCCYlsZkQ80f0lB-bzo"
+          "current_key": "AIzaSyCLlgCFVk0zFv_Rlr39qY0m2Kh17ac0HlI"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "697402363544-8ptgik0rp1elke7fglmb3q8d3mlt3m6i.apps.googleusercontent.com",
+              "client_id": "713071881264-nb4nhgjs95mbn6dclek81b60bmjb37cr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
