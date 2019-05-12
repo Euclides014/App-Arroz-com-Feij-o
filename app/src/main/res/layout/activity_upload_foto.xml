@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/texturamadeira"
-    tools:context=".Activity.UploadFotoActivity"
+    tools:context=".View.UploadFoto"
     android:orientation="vertical">
 
     <ScrollView

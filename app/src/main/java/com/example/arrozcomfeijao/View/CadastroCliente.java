@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,10 +10,9 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
-import com.example.cursoandroidfirebase2.Classes.Usuario;
-import com.example.cursoandroidfirebase2.DAO.ConfiguracaoFirebase;
-import com.example.cursoandroidfirebase2.Helper.Preferencias;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class cadastroUsuarioComumActivity extends AppCompatActivity {
+public class CadastroCliente extends AppCompatActivity {
 
     private BootstrapEditText email;
     private BootstrapEditText senha1;
@@ -46,7 +45,7 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_usuario_comum);
+        setContentView(R.layout.activity_cadastro_cliente);
 
         email = (BootstrapEditText) findViewById(R.id.edtCadEmail);
         CPF = (BootstrapEditText) findViewById(R.id.edtCadCPF);
@@ -83,7 +82,7 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
 
                     cadUsuario();
                 }else{
-                    Toast.makeText(cadastroUsuarioComumActivity.this, "As senha não se correspondem", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CadastroCliente.this, "As senha não se correspondem", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -95,7 +94,7 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),
                 usuario.getSenha()
-        ).addOnCompleteListener(cadastroUsuarioComumActivity.this, new OnCompleteListener<AuthResult>() {
+        ).addOnCompleteListener(CadastroCliente.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
@@ -119,7 +118,7 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(cadastroUsuarioComumActivity.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
+                    Toast.makeText(CadastroCliente.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
                 }
             }
         });
@@ -131,11 +130,11 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
             String key = reference.push().getKey();
             usuario.setKeyUsuario(key);
             reference.child(key).setValue(usuario);
-            Toast.makeText(cadastroUsuarioComumActivity.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroCliente.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
             abriLoginUsuario();
             return true;
         }catch (Exception e){
-            Toast.makeText(cadastroUsuarioComumActivity.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroCliente.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return  false;
         }
@@ -143,7 +142,7 @@ public class cadastroUsuarioComumActivity extends AppCompatActivity {
 
     private void abriLoginUsuario(){
 
-        Intent intent = new Intent(cadastroUsuarioComumActivity.this, MainActivity.class);
+        Intent intent = new Intent(CadastroCliente.this, Login.class);
         startActivity(intent);
         finish();
 

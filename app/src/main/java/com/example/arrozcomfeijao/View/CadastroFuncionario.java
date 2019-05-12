@@ -1,21 +1,19 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
-import com.example.cursoandroidfirebase2.Classes.Usuario;
-import com.example.cursoandroidfirebase2.DAO.ConfiguracaoFirebase;
-import com.example.cursoandroidfirebase2.Helper.Preferencias;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.Helper.Preferencias;
+import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class cadastroUsuario extends AppCompatActivity {
+public class CadastroFuncionario extends AppCompatActivity {
 
     private BootstrapEditText email;
     private BootstrapEditText senha1;
@@ -50,7 +48,7 @@ public class cadastroUsuario extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_usuario);
+        setContentView(R.layout.activity_cadastro_funcionario);
 
         email = (BootstrapEditText) findViewById(R.id.edtCadEmail);
         senha1 = (BootstrapEditText) findViewById(R.id.edtCadSenha1);
@@ -92,7 +90,7 @@ public class cadastroUsuario extends AppCompatActivity {
 
                     cadUsuario();
                 }else{
-                    Toast.makeText(cadastroUsuario.this, "As senha não se correspondem", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CadastroFuncionario.this, "As senha não se correspondem", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -104,7 +102,7 @@ public class cadastroUsuario extends AppCompatActivity {
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),
                 usuario.getSenha()
-        ).addOnCompleteListener(cadastroUsuario.this, new OnCompleteListener<AuthResult>() {
+        ).addOnCompleteListener(CadastroFuncionario.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
@@ -132,7 +130,7 @@ public class cadastroUsuario extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(cadastroUsuario.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
+                    Toast.makeText(CadastroFuncionario.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
                 }
             }
         });
@@ -144,10 +142,10 @@ public class cadastroUsuario extends AppCompatActivity {
             String key = reference.push().getKey();
             usuario.setKeyUsuario(key);
             reference.push().setValue(usuario);
-            Toast.makeText(cadastroUsuario.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroFuncionario.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
             return true;
         }catch (Exception e){
-            Toast.makeText(cadastroUsuario.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroFuncionario.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return  false;
         }
@@ -155,19 +153,19 @@ public class cadastroUsuario extends AppCompatActivity {
 
     private void abreTelaPrincipal(){
         autenticacao = ConfiguracaoFirebase.getFirebaseAuth();
-        Preferencias preferencias = new Preferencias(cadastroUsuario.this);
+        Preferencias preferencias = new Preferencias(CadastroFuncionario.this);
         autenticacao.signInWithEmailAndPassword(preferencias.getEmailUsuarioLogado(), preferencias.getSenhaUsuarioLogado()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
-                    Intent intent = new Intent(cadastroUsuario.this, PrincipalActivity.class);
+                    Intent intent = new Intent(CadastroFuncionario.this, PrincipalAdmin.class);
                     startActivity(intent);
                     finish();
                 }else {
-                    Toast.makeText(cadastroUsuario.this, "Falha", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CadastroFuncionario.this, "Falha", Toast.LENGTH_LONG).show();
                     autenticacao.signOut();
-                    Intent intent = new Intent(cadastroUsuario.this, MainActivity.class);
+                    Intent intent = new Intent(CadastroFuncionario.this, Login.class);
                     finish();
                     startActivity(intent);
                 }

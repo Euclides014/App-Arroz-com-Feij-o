@@ -1,35 +1,32 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.widget.LinearLayout;
 
-import com.example.cursoandroidfirebase2.Adapter.CardapioAdapter;
-import com.example.cursoandroidfirebase2.Classes.Cardapio;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Controller.CardapioAdapter;
+import com.example.arrozcomfeijao.Controller.CardapioController;
+import com.example.arrozcomfeijao.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class cardapioActivity extends AppCompatActivity {
+public class Cardapio extends AppCompatActivity {
 
     private RecyclerView mRecycleViewCardapios;
     private CardapioAdapter adapter;
-    private List<Cardapio> cardapios;
+    private List<CardapioController> cardapioControllers;
 
     private DatabaseReference referenciaFirebase;
 
-    private Cardapio todosCardapios;
+    private CardapioController todosCardapios;
     private LinearLayoutManager mLayoutManagerTodosProdutos;
 
     @Override
@@ -47,15 +44,15 @@ public class cardapioActivity extends AppCompatActivity {
         mLayoutManagerTodosProdutos = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecycleViewCardapios.setLayoutManager(mLayoutManagerTodosProdutos);
 
-        cardapios = new ArrayList<>();
+        cardapioControllers = new ArrayList<>();
         referenciaFirebase = FirebaseDatabase.getInstance().getReference();
-        referenciaFirebase.child("cardapio").orderByChild("nomePrato").addValueEventListener(new ValueEventListener() {
+        referenciaFirebase.child("CardapioController").orderByChild("nomePrato").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-                    todosCardapios = postSnapshot.getValue(Cardapio.class);
-                    cardapios.add(todosCardapios);
+                    todosCardapios = postSnapshot.getValue(CardapioController.class);
+                    cardapioControllers.add(todosCardapios);
 
                     }
 
@@ -68,7 +65,7 @@ public class cardapioActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new CardapioAdapter(cardapios, this);
+        adapter = new CardapioAdapter(cardapioControllers, this);
         mRecycleViewCardapios.setAdapter(adapter);
     }
 }

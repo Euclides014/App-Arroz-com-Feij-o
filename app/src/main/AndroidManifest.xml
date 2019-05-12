@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cursoandroidfirebase2">
+    package="com.example.arrozcomfeijao">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,10 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.EditarPerfilActivity"></activity>
-        <activity android:name=".Activity.MeuPerfilActivity" />
+        <activity android:name="com.example.arrozcomfeijao.View.EditarPerfil"></activity>
+        <activity android:name="com.example.arrozcomfeijao.View.MeuPerfil" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name="com.example.arrozcomfeijao.View.Login"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,13 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.PrincipalActivityAtendente" />
-        <activity android:name=".Activity.PrincipalActivityComum" />
-        <activity android:name=".Activity.cardapioActivity" />
-        <activity android:name=".Activity.cadastroUsuarioComumActivity" />
-        <activity android:name=".Activity.UploadFotoActivity" />
-        <activity android:name=".Activity.PrincipalActivity" />
-        <activity android:name=".Activity.cadastroUsuario" />
+        <activity android:name="com.example.arrozcomfeijao.View.PrincipalFuncionario" />
+        <activity android:name="com.example.arrozcomfeijao.View.PrincipalCliente" />
+        <activity android:name="com.example.arrozcomfeijao.View.Cardapio" />
+        <activity android:name="com.example.arrozcomfeijao.View.CadastroCliente" />
+        <activity android:name="com.example.arrozcomfeijao.View.UploadFoto" />
+        <activity android:name="com.example.arrozcomfeijao.View.PrincipalAdmin" />
+        <activity android:name="com.example.arrozcomfeijao.View.CadastroFuncionario" />
     </application>
 
 </manifest>

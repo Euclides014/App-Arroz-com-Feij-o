@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/texturamadeira"
     android:orientation="vertical"
-    tools:context=".Activity.EditarPerfilActivity">
+    tools:context=".View.EditarPerfil">
 
     <ScrollView
         android:layout_width="match_parent"

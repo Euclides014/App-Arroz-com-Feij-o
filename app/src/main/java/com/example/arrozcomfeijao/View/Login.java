@@ -1,4 +1,4 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
-import com.example.cursoandroidfirebase2.Classes.Usuario;
-import com.example.cursoandroidfirebase2.DAO.ConfiguracaoFirebase;
-import com.example.cursoandroidfirebase2.Helper.Preferencias;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.Helper.Preferencias;
+import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     private FirebaseAuth autentificacao;
     private BootstrapEditText editEmailLogin;
@@ -48,16 +48,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         editEmailLogin = (BootstrapEditText) findViewById(R.id.editEmail);
         editSenhaLogin = (BootstrapEditText) findViewById(R.id.editSenha);
@@ -65,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         txtAbreCadastro = (TextView) findViewById(R.id.txtAbreCadastro);
         txtRecuperarSenha = (TextView) findViewById(R.id.txtRecuperarSenha);
 
-        final EditText editTextEmail = new EditText(MainActivity.this);
+        final EditText editTextEmail = new EditText(Login.this);
         editTextEmail.setHint("example@example.com");
 
         referenciaFirebase = FirebaseDatabase.getInstance().getReference();
@@ -92,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                         validarLogin();
                     } else {
-                        Toast.makeText(MainActivity.this, "Preencha os campos de E-mail e senha", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Preencha os campos de E-mail e senha", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -102,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         txtAbreCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, cadastroUsuarioComumActivity.class);
+                Intent intent = new Intent(Login.this, CadastroCliente.class);
                 startActivity(intent);
                 finish();
             }
@@ -112,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                 builder.setCancelable(false);
                 builder.setTitle("Recuperar senha");
                 builder.setMessage("Informe o seu e-mail");
@@ -128,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(MainActivity.this, "Em instantes você receberá um e-mail!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(Login.this, "Em instantes você receberá um e-mail!", Toast.LENGTH_LONG).show();
 
                                         Intent intent = getIntent();
                                         finish();
                                         startActivity(intent);
                                     }else{
-                                        Toast.makeText(MainActivity.this, "Falha ao enviar o e-mail", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(Login.this, "Falha ao enviar o e-mail", Toast.LENGTH_LONG).show();
 
                                         Intent intent = getIntent();
                                         finish();
@@ -154,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Toast.makeText(MainActivity.this, "Preencha o campo de e-mail!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this, "Preencha o campo de e-mail!", Toast.LENGTH_LONG).show();
                 }
                 alerta = builder.create();
                 alerta.show();
@@ -172,13 +164,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()) {
                     abrirTelaPrincipal(usuario.getEmail());
-                    Preferencias preferencias = new Preferencias(MainActivity.this);
+                    Preferencias preferencias = new Preferencias(Login.this);
                     preferencias.salvarUsuarioPreferencias(usuario.getEmail(), usuario.getSenha());
-                    Toast.makeText(MainActivity.this,
+                    Toast.makeText(Login.this,
                             "Login Efetuado com sucesso!",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this,
+                    Toast.makeText(Login.this,
                             "Usuário ou senha inválidos! Tente novamente",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -197,17 +189,17 @@ public class MainActivity extends AppCompatActivity {
                     String tipoUsuarioEmail = postSnapshot.child("tipo").getValue().toString();
 
                     if (tipoUsuarioEmail.equals("Administrador")){
-                        Intent intent = new Intent( MainActivity.this, PrincipalActivity.class);
+                        Intent intent = new Intent( Login.this, PrincipalAdmin.class);
                         startActivity(intent);
                         finish();
 
                     }else if (tipoUsuarioEmail.equals("Atendente")){
-                        Intent intent = new Intent( MainActivity.this, PrincipalActivityAtendente.class);
+                        Intent intent = new Intent( Login.this, PrincipalFuncionario.class);
                         startActivity(intent);
                         finish();
 
                     }else if (tipoUsuarioEmail.equals("Comum")){
-                        Intent intent = new Intent( MainActivity.this, PrincipalActivityComum.class);
+                        Intent intent = new Intent( Login.this, PrincipalCliente.class);
                         startActivity(intent);
                         finish();
                     }

@@ -7,7 +7,7 @@
     android:background="@drawable/texturamadeira"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.PrincipalActivity">
+    tools:context=".View.PrincipalAdmin">
 
     <TextView
         android:layout_width="match_parent"

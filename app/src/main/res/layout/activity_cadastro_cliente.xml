@@ -4,28 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@drawable/texturamadeira"
-    tools:context=".Activity.cadastroUsuario">
-
+    android:orientation="vertical"
+    tools:context=".View.CadastroCliente">
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_margin="16dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CADASTRO USUARIO"
+                android:text="CADASTRO"
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtCadNome"
+                android:layout_marginTop="10dp"
+                android:hint="Nome"
+                android:inputType="text"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true"
+                app:bootstrapBrand="info"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtCadCPF"
+                android:layout_marginTop="10dp"
+                android:hint="CPF"
+                android:inputType="text"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true"
+                app:bootstrapBrand="info"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtCadRua"
+                android:layout_marginTop="10dp"
+                android:hint="Rua"
+                android:inputType="text"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true"
+                app:bootstrapBrand="info"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtCadNumero"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="N°"
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/edtCadBairro"
+                android:layout_width="221dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Bairro"
+                android:inputType="text"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:layout_width="match_parent"
@@ -63,93 +117,18 @@
                 app:bootstrapBrand="info"
                 />
 
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtCadNome"
-                android:layout_marginTop="10dp"
-                android:hint="Nome"
-                android:inputType="text"
-                app:bootstrapSize="xl"
-                app:roundedCorners="true"
-                app:bootstrapBrand="info"
-                />
-
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtCadCPFUsuario"
-                android:layout_marginTop="10dp"
-                android:hint="CPF"
-                android:inputType="text"
-                app:bootstrapSize="xl"
-                app:roundedCorners="true"
-                app:bootstrapBrand="info"/>
-
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtCadRuaUsuario"
-                android:layout_marginTop="10dp"
-                android:hint="Rua"
-                android:inputType="text"
-                app:bootstrapSize="xl"
-                app:roundedCorners="true"
-                app:bootstrapBrand="info"/>
-
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/edtCadNumeroUsuario"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="N°"
-                android:inputType="text"
-                app:bootstrapBrand="info"
-                app:bootstrapSize="xl"
-                app:roundedCorners="true" />
-
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/edtCadBairroUsuario"
-                android:layout_width="221dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="Bairro"
-                android:inputType="text"
-                app:bootstrapBrand="info"
-                app:bootstrapSize="xl"
-                app:roundedCorners="true" />
-
-            <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-            <RadioButton
-                android:id="@+id/rbAdmin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Administrador" />
-
-            <RadioButton
-                android:id="@+id/rbAtend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Atendente" />
-
-        </RadioGroup>
-
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/rbFemale"
+                    android:id="@+id/rbFeminino"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Feminino" />
 
                 <RadioButton
-                    android:id="@+id/rbMale"
+                    android:id="@+id/rbMasculino"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Masculino" />
@@ -183,4 +162,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

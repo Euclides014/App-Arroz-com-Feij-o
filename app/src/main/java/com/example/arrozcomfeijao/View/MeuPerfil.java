@@ -1,8 +1,7 @@
-package com.example.cursoandroidfirebase2.Activity;
+package com.example.arrozcomfeijao.View;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.example.cursoandroidfirebase2.Classes.Usuario;
-import com.example.cursoandroidfirebase2.DAO.ConfiguracaoFirebase;
-import com.example.cursoandroidfirebase2.R;
+import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-public class MeuPerfilActivity extends AppCompatActivity {
+public class MeuPerfil extends AppCompatActivity {
 
     private TextView txtNome;
     private TextView txtCPF;
@@ -116,7 +115,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
     }
 
     private void cancelar() {
-        Intent intent = new Intent(MeuPerfilActivity.this, MainActivity.class);
+        Intent intent = new Intent(MeuPerfil.this, Login.class);
         startActivity(intent);
         finish();
     }
@@ -136,7 +135,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Log.d("Usuario_Excluido", "User Deleted");
-                                        Toast.makeText(MeuPerfilActivity.this, "O usuário foi excluido!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MeuPerfil.this, "O usuário foi excluido!", Toast.LENGTH_LONG).show();
                                         reference = ConfiguracaoFirebase.getFirebase();
                                         reference.child("usuarios").child(usuario.getKeyUsuario()).removeValue();
 
@@ -157,7 +156,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
     }
 
     private void abrirTelaLogin(){
-        Intent intent = new Intent(MeuPerfilActivity.this, MainActivity.class);
+        Intent intent = new Intent(MeuPerfil.this, Login.class);
         startActivity(intent);
         finish();
     }
@@ -199,7 +198,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Usuario usuario = postSnapshot.getValue(Usuario.class);
 
-                    final Intent intent = new Intent(MeuPerfilActivity.this, EditarPerfilActivity.class);
+                    final Intent intent = new Intent(MeuPerfil.this, EditarPerfil.class);
                     final Bundle bundle = new Bundle();
                     bundle.putString("origem", "editarUsuario");
                     bundle.putString("nome", usuario.getNome());
