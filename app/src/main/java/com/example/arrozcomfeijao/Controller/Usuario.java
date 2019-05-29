@@ -1,6 +1,7 @@
 package com.example.arrozcomfeijao.Controller;
 
 import com.google.firebase.database.Exclude;
+import com.google.protobuf.Any;
 
 public class Usuario {
 
@@ -16,6 +17,12 @@ public class Usuario {
     private String bairro;
     private String keyUsuario;
 
+    public Usuario(){}
+
+    public Usuario(String nome, String tipo){
+        this.nome = nome;
+        this.tipo = tipo;
+    }
 
     public String getEmail() {
         return email;
