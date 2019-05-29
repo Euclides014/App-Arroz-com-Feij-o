@@ -11,9 +11,11 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Helper.RefFirebase;
 import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
 import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class CadastroCliente extends AppCompatActivity {
 
@@ -38,8 +42,7 @@ public class CadastroCliente extends AppCompatActivity {
     private BootstrapButton btnCadastrar;
     private BootstrapButton btnCancelar;
     private FirebaseAuth autenticacao;
-    private FirebaseDatabase database;
-    private DatabaseReference reference;
+    private FirebaseFirestore reference;
     private Usuario usuario;
 
     @Override
@@ -90,7 +93,7 @@ public class CadastroCliente extends AppCompatActivity {
     }
 
     private void cadUsuario(){
-        autenticacao = ConfiguracaoFirebase.getFirebaseAuth();
+        autenticacao = RefFirebase.getFirebaseAuth();
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),
                 usuario.getSenha()
@@ -98,10 +101,22 @@ public class CadastroCliente extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    insereUsuario(usuario);
+                    //insereUsuario(usuario);
+                    reference = RefFirebase.getFirebaseStoreCliente();
+                    String UID = autenticacao.getUid();
+                    reference.collection("clientes").document(UID).set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(CadastroCliente.this,"Cliente cadstrado com sucesso ", Toast.LENGTH_SHORT).show();;
+                        }
+                    });
+
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    finish();
+
 
                 }else {
-
                     String erroExcecao = "";
                     try {
                         throw task.getException();
@@ -124,7 +139,7 @@ public class CadastroCliente extends AppCompatActivity {
         });
     }
 
-    private boolean insereUsuario(Usuario usuario){
+   /* private boolean insereUsuario(Usuario usuario){
         try{
             reference = ConfiguracaoFirebase.getFirebase().child("usuarios");
             String key = reference.push().getKey();
@@ -142,10 +157,8 @@ public class CadastroCliente extends AppCompatActivity {
 
     private void abriLoginUsuario(){
 
-        Intent intent = new Intent(CadastroCliente.this, Login.class);
-        startActivity(intent);
-        finish();
 
-    }
+
+    }*/
 }
 
