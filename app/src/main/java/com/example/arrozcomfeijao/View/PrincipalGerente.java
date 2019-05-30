@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class PrincipalAdmin extends AppCompatActivity {
+public class PrincipalGerente extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
     private DatabaseReference referenciaFirebase;
@@ -71,30 +71,30 @@ public class PrincipalAdmin extends AppCompatActivity {
     }
 
     private void abrirTelaCadastroUsuario(){
-        Intent intent = new Intent(PrincipalAdmin.this, CadastroFuncionario.class);
+        Intent intent = new Intent(PrincipalGerente.this, CadastroFuncionario.class);
         startActivity(intent);
     }
 
     private void chamarCardapio(){
-        Intent intent = new Intent(PrincipalAdmin.this, Cardapio.class);
+        Intent intent = new Intent(PrincipalGerente.this, Cardapio.class);
         startActivity(intent);
     }
 
     private void verMeuPerfil(){
-        Intent intent = new Intent(PrincipalAdmin.this, MeuPerfil.class);
+        Intent intent = new Intent(PrincipalGerente.this, MeuPerfil.class);
         startActivity(intent);
         finish();
     }
 
     private void deslogarUsuario(){
         autenticacao.signOut();
-        Intent intent = new Intent(PrincipalAdmin.this, Login.class);
+        Intent intent = new Intent(PrincipalGerente.this, Login.class);
         startActivity(intent);
         finish();
     }
 
     private void abrirTelaCadastroProdutos(){
-        //Intent intent = new Intent(PrincipalAdmin.this, CadastroFuncionario.class);
+        //Intent intent = new Intent(PrincipalGerente.this, CadastroFuncionario.class);
         //startActivity(intent);
     }
 }

@@ -11,38 +11,38 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.arrozcomfeijao.Controller.Usuario;
+import com.example.arrozcomfeijao.Helper.RefFirebase;
 import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
 import com.example.arrozcomfeijao.Helper.Preferencias;
 import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CadastroFuncionario extends AppCompatActivity {
 
+    private FirebaseAuth currentUser;
     private BootstrapEditText email;
     private BootstrapEditText senha1;
     private BootstrapEditText senha2;
     private BootstrapEditText nome;
-    private RadioButton rbAdmin;
-    private RadioButton rbAtend;
+    private RadioButton rbGerente;
+    private RadioButton rbGarcon;
     private BootstrapButton btnCadastrar;
     private BootstrapButton btnCancelar;
     private FirebaseAuth autenticacao;
-    private FirebaseDatabase database;
-    private DatabaseReference reference;
+    private FirebaseFirestore reference;
     private BootstrapEditText CPF;
     private BootstrapEditText rua;
     private BootstrapEditText numero;
     private BootstrapEditText bairro;
-    private RadioButton rbFeminino;
-    private RadioButton rbMasculino;
+    private RadioButton rbCozinheiro;
     private Usuario usuario;
 
     @Override
@@ -50,20 +50,20 @@ public class CadastroFuncionario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_funcionario);
 
-        email = (BootstrapEditText) findViewById(R.id.edtCadEmail);
-        senha1 = (BootstrapEditText) findViewById(R.id.edtCadSenha1);
-        senha2 = (BootstrapEditText) findViewById(R.id.edtCadSenha2);
-        nome = (BootstrapEditText) findViewById(R.id.edtCadNome);
-        CPF = (BootstrapEditText) findViewById(R.id.edtCadCPFUsuario);
-        rua = (BootstrapEditText) findViewById(R.id.edtCadRuaUsuario);
-        numero = (BootstrapEditText) findViewById(R.id.edtCadNumeroUsuario);
-        bairro = (BootstrapEditText) findViewById(R.id.edtCadBairroUsuario);
-        rbAdmin = (RadioButton) findViewById(R.id.rbAdmin);
-        rbAtend = (RadioButton) findViewById(R.id.rbAtend);
-        btnCadastrar = (BootstrapButton) findViewById(R.id.btnCadastrar);
-        btnCancelar = (BootstrapButton) findViewById(R.id.btnCancela);
-        rbFeminino = (RadioButton) findViewById(R.id.rbFemale);
-        rbMasculino = (RadioButton) findViewById(R.id.rbMale);
+        currentUser = FirebaseAuth.getInstance();
+        email = findViewById(R.id.edtCadEmail);
+        senha1 = findViewById(R.id.edtCadSenha1);
+        senha2 = findViewById(R.id.edtCadSenha2);
+        nome = findViewById(R.id.edtCadNome);
+        CPF = findViewById(R.id.edtCadCPFUsuario);
+        rua = findViewById(R.id.edtCadRuaUsuario);
+        numero = findViewById(R.id.edtCadNumeroUsuario);
+        bairro = findViewById(R.id.edtCadBairroUsuario);
+        rbGerente = findViewById(R.id.rbGerente);
+        rbGarcon = findViewById(R.id.rbGarcon);
+        btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnCancelar = findViewById(R.id.btnCancela);
+        rbCozinheiro = findViewById(R.id.rbCozinheiro);
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +78,12 @@ public class CadastroFuncionario extends AppCompatActivity {
                     usuario.setNumero(numero.getText().toString());
                     usuario.setBairro(bairro.getText().toString());
 
-                    if(rbAdmin.isChecked()){
-                        usuario.setTipo("Administrador");
-                    }else if(rbAtend.isChecked()){
-                        usuario.setTipo("Atendente");
-                    }else if(rbMasculino.isChecked()){
-                        usuario.setSexo("Masculino");
-                    }else if(rbFeminino.isChecked()){
-                        usuario.setSexo("Feminino");
+                    if(rbGerente.isChecked()){
+                        usuario.setTipo("Gerente");
+                    }else if(rbGarcon.isChecked()) {
+                        usuario.setTipo("Garcon");
+                    }else if(rbCozinheiro.isChecked()){
+                        usuario.setSexo("Cozinheiro");
                     }
 
                     cadUsuario();
@@ -106,14 +104,23 @@ public class CadastroFuncionario extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    insereUsuario(usuario);
-                    finish();
-                    //deslogar ao adicionar o usuario
-                    autenticacao.signOut();
-                    //para abrir a tela principal após a reautenticacao
-                    abreTelaPrincipal();
-                }else {
+                    //insereUsuario(usuario);
+                    reference = RefFirebase.getFirebaseStore();
+                    String UID = RefFirebase.getFirebaseAuth().getUid();
+                    reference.collection("usuarios").document(UID).set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(CadastroFuncionario.this,"Funcionário cadstrado com sucesso ", Toast.LENGTH_SHORT).show();;
+                        }
+                    });
 
+
+                    Intent intent = new Intent(getApplicationContext(), PrincipalGerente.class);
+                    startActivity(intent);
+                    finish();
+
+
+                }else {
                     String erroExcecao = "";
                     try {
                         throw task.getException();
@@ -132,39 +139,25 @@ public class CadastroFuncionario extends AppCompatActivity {
 
                     Toast.makeText(CadastroFuncionario.this,"Erro: " + erroExcecao, Toast.LENGTH_SHORT).show();;
                 }
+
             }
         });
     }
 
-    private boolean insereUsuario(Usuario usuario){
-        try{
-            reference = ConfiguracaoFirebase.getFirebase().child("usuarios");
-            String key = reference.push().getKey();
-            usuario.setKeyUsuario(key);
-            reference.push().setValue(usuario);
-            Toast.makeText(CadastroFuncionario.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-            return true;
-        }catch (Exception e){
-            Toast.makeText(CadastroFuncionario.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-            return  false;
-        }
-    }
-
     private void abreTelaPrincipal(){
-        autenticacao = ConfiguracaoFirebase.getFirebaseAuth();
+        final FirebaseAuth auth = RefFirebase.getFirebaseAuth();
         Preferencias preferencias = new Preferencias(CadastroFuncionario.this);
-        autenticacao.signInWithEmailAndPassword(preferencias.getEmailUsuarioLogado(), preferencias.getSenhaUsuarioLogado()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(preferencias.getEmailUsuarioLogado(), preferencias.getSenhaUsuarioLogado()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
-                    Intent intent = new Intent(CadastroFuncionario.this, PrincipalAdmin.class);
+                    Intent intent = new Intent(CadastroFuncionario.this, PrincipalGerente.class);
                     startActivity(intent);
                     finish();
                 }else {
                     Toast.makeText(CadastroFuncionario.this, "Falha", Toast.LENGTH_LONG).show();
-                    autenticacao.signOut();
+                    auth.signOut();
                     Intent intent = new Intent(CadastroFuncionario.this, Login.class);
                     finish();
                     startActivity(intent);

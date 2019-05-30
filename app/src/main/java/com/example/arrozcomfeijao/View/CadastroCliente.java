@@ -50,18 +50,18 @@ public class CadastroCliente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cliente);
 
-        email = (BootstrapEditText) findViewById(R.id.edtCadEmail);
-        CPF = (BootstrapEditText) findViewById(R.id.edtCadCPF);
-        rua = (BootstrapEditText) findViewById(R.id.edtCadRua);
-        numero = (BootstrapEditText) findViewById(R.id.edtCadNumero);
-        bairro = (BootstrapEditText) findViewById(R.id.edtCadBairro);
-        senha1 = (BootstrapEditText) findViewById(R.id.edtCadSenha1);
-        senha2 = (BootstrapEditText) findViewById(R.id.edtCadSenha2);
-        nome = (BootstrapEditText) findViewById(R.id.edtCadNome);
-        rbFeminino = (RadioButton) findViewById(R.id.rbFeminino);
-        rbMasculino = (RadioButton) findViewById(R.id.rbMasculino);
-        btnCadastrar = (BootstrapButton) findViewById(R.id.btnCadastrar);
-        btnCancelar = (BootstrapButton) findViewById(R.id.btnCancela);
+        email =  findViewById(R.id.edtCadEmail);
+        CPF = findViewById(R.id.edtCadCPF);
+        rua = findViewById(R.id.edtCadRua);
+        numero = findViewById(R.id.edtCadNumero);
+        bairro = findViewById(R.id.edtCadBairro);
+        senha1 = findViewById(R.id.edtCadSenha1);
+        senha2 = findViewById(R.id.edtCadSenha2);
+        nome = findViewById(R.id.edtCadNome);
+        rbFeminino = findViewById(R.id.rbFeminino);
+        rbMasculino = findViewById(R.id.rbMasculino);
+        btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnCancelar = findViewById(R.id.btnCancela);
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +75,7 @@ public class CadastroCliente extends AppCompatActivity {
                     usuario.setRua(rua.getText().toString());
                     usuario.setNumero(numero.getText().toString());
                     usuario.setBairro(bairro.getText().toString());
-                    usuario.setTipo("Comum");
+                    usuario.setTipo("Cliente");
 
                     if(rbFeminino.isChecked()){
                         usuario.setSexo("Feminino");
@@ -102,9 +102,9 @@ public class CadastroCliente extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     //insereUsuario(usuario);
-                    reference = RefFirebase.getFirebaseStoreCliente();
+                    reference = RefFirebase.getFirebaseStore();
                     String UID = autenticacao.getUid();
-                    reference.collection("clientes").document(UID).set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    reference.collection("usuarios").document(UID).set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(CadastroCliente.this,"Cliente cadstrado com sucesso ", Toast.LENGTH_SHORT).show();;
@@ -139,26 +139,6 @@ public class CadastroCliente extends AppCompatActivity {
         });
     }
 
-   /* private boolean insereUsuario(Usuario usuario){
-        try{
-            reference = ConfiguracaoFirebase.getFirebase().child("usuarios");
-            String key = reference.push().getKey();
-            usuario.setKeyUsuario(key);
-            reference.child(key).setValue(usuario);
-            Toast.makeText(CadastroCliente.this,"Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-            abriLoginUsuario();
-            return true;
-        }catch (Exception e){
-            Toast.makeText(CadastroCliente.this,"Erro ao gravar o usuário!", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-            return  false;
-        }
-    }
 
-    private void abriLoginUsuario(){
-
-
-
-    }*/
 }
 
