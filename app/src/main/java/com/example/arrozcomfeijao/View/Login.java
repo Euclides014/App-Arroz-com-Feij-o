@@ -1,13 +1,9 @@
 package com.example.arrozcomfeijao.View;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
@@ -18,19 +14,17 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.arrozcomfeijao.Controller.Usuario;
-import com.example.arrozcomfeijao.Model.ConfiguracaoFirebase;
+import com.example.arrozcomfeijao.Helper.RefFirebase;
 import com.example.arrozcomfeijao.Helper.Preferencias;
 import com.example.arrozcomfeijao.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class Login extends AppCompatActivity {
 
@@ -43,53 +37,30 @@ public class Login extends AppCompatActivity {
     private TextView txtRecuperarSenha;
     private AlertDialog alerta;
 
-    private DatabaseReference referenciaFirebase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        editEmailLogin = (BootstrapEditText) findViewById(R.id.editEmail);
-        editSenhaLogin = (BootstrapEditText) findViewById(R.id.editSenha);
-        btnLogin = (BootstrapButton) findViewById(R.id.btnLogin);
-        txtAbreCadastro = (TextView) findViewById(R.id.txtAbreCadastro);
-        txtRecuperarSenha = (TextView) findViewById(R.id.txtRecuperarSenha);
+        //Criação de variavéis para armazenar componentes da tela de login
+        editEmailLogin =  findViewById(R.id.editEmail);
+        editSenhaLogin = findViewById(R.id.editSenha);
+        btnLogin =  findViewById(R.id.btnLogin);
+        txtAbreCadastro = findViewById(R.id.txtAbreCadastro);
+        txtRecuperarSenha = findViewById(R.id.txtRecuperarSenha);
 
         final EditText editTextEmail = new EditText(Login.this);
         editTextEmail.setHint("example@example.com");
 
-        referenciaFirebase = FirebaseDatabase.getInstance().getReference();
 
-        autentificacao = FirebaseAuth.getInstance();
-
-        permission();
 
         if (usuarioLogado()) {
+            String UID = RefFirebase.getFirebaseAuth().getUid();
+            abrirTelaPrincipal(UID);
 
-            String email = autentificacao.getCurrentUser().getEmail().toString();
-            abrirTelaPrincipal(email);
-            finish();
 
-        } else {
-
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!editEmailLogin.getText().toString().equals("") && !editSenhaLogin.getText().toString().equals("")) {
-                        usuario = new Usuario();
-                        usuario.setEmail(editEmailLogin.getText().toString());
-                        usuario.setSenha(editSenhaLogin.getText().toString());
-
-                        validarLogin();
-                    } else {
-                        Toast.makeText(Login.this, "Preencha os campos de E-mail e senha", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
         }
+
 
         txtAbreCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +68,22 @@ public class Login extends AppCompatActivity {
                 Intent intent = new Intent(Login.this, CadastroCliente.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!editEmailLogin.getText().toString().equals("") && !editSenhaLogin.getText().toString().equals("")) {
+                    usuario = new Usuario();
+                    usuario.setEmail(editEmailLogin.getText().toString());
+                    usuario.setSenha(editSenhaLogin.getText().toString());
+
+                    validarLogin();
+                } else {
+                    Toast.makeText(Login.this, "Preencha os campos de E-mail e senha", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -156,14 +143,16 @@ public class Login extends AppCompatActivity {
 
 
     private void validarLogin(){
-        autentificacao = ConfiguracaoFirebase.getFirebaseAuth();
-        autentificacao.signInWithEmailAndPassword(usuario.getEmail().toString(),
-                usuario.getSenha().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        autentificacao = RefFirebase.getFirebaseAuth();
+        autentificacao.signInWithEmailAndPassword(usuario.getEmail(),
+                usuario.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
-                    abrirTelaPrincipal(usuario.getEmail());
+                    String UID = RefFirebase.getFirebaseAuth().getUid();
+                    abrirTelaPrincipal(UID);
                     Preferencias preferencias = new Preferencias(Login.this);
                     preferencias.salvarUsuarioPreferencias(usuario.getEmail(), usuario.getSenha());
                     Toast.makeText(Login.this,
@@ -177,40 +166,38 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    private void abrirTelaPrincipal(String emailUsuario){
+    private void abrirTelaPrincipal(String UidUser){
 
-        String email = autentificacao.getCurrentUser().getEmail().toString();
-
-        referenciaFirebase.child("usuarios").orderByChild("email").equalTo(email.toString()).addValueEventListener(new ValueEventListener() {
+        DocumentReference reference = RefFirebase.getFirebaseStore().collection("usuarios").document(UidUser);
+        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Usuario usuario = documentSnapshot.toObject(Usuario.class);
 
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String tipoUsuarioEmail = postSnapshot.child("tipo").getValue().toString();
+                if (usuario.getTipo().equals("Gerente")) {
+                    Intent intent = new Intent(Login.this, PrincipalGerente.class);
+                    startActivity(intent);
+                    finish();
+                }else if (usuario.getTipo().equals("Garcon")){
 
-                    if (tipoUsuarioEmail.equals("Administrador")){
-                        Intent intent = new Intent( Login.this, PrincipalAdmin.class);
-                        startActivity(intent);
-                        finish();
+                    Intent intent = new Intent( Login.this, PrincipalGarcon.class);
+                    startActivity(intent);
+                    finish();
 
-                    }else if (tipoUsuarioEmail.equals("Atendente")){
-                        Intent intent = new Intent( Login.this, PrincipalFuncionario.class);
-                        startActivity(intent);
-                        finish();
+                }else if (usuario.getTipo().equals("Cozinheiro")){
 
-                    }else if (tipoUsuarioEmail.equals("Comum")){
-                        Intent intent = new Intent( Login.this, PrincipalCliente.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    Intent intent = new Intent( Login.this, PrincipalCozinheiro.class);
+                    startActivity(intent);
+                    finish();
+
+                }else if (usuario.getTipo().equals("Cliente")){
+                    Intent intent = new Intent( Login.this, PrincipalCliente.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
         });
+
     }
 
     public Boolean usuarioLogado(){
@@ -222,14 +209,5 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    public void abrirNovaActivity (Intent intent){
-        startActivity(intent);
-        finish();
-    }
 
-    public void permission(){
-        int PERMISSION_ALL = 1;
-        String [] PERMISSSION = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        ActivityCompat.requestPermissions(this, PERMISSSION, PERMISSION_ALL);
-    }
 }

@@ -139,7 +139,7 @@ public class UploadFoto extends AppCompatActivity {
     }
 
     private void chamarTelaPrincipal(){
-        Intent intent = new Intent(UploadFoto.this, PrincipalFuncionario.class);
+        Intent intent = new Intent(UploadFoto.this, PrincipalGarcon.class);
         startActivity(intent);
         finish();
     }

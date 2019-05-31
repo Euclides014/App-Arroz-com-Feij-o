@@ -26,12 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.arrozcomfeijao.View.PrincipalFuncionario" />
+        <activity android:name="com.example.arrozcomfeijao.View.PrincipalGarcon" />
         <activity android:name="com.example.arrozcomfeijao.View.PrincipalCliente" />
         <activity android:name="com.example.arrozcomfeijao.View.Cardapio" />
         <activity android:name="com.example.arrozcomfeijao.View.CadastroCliente" />
         <activity android:name="com.example.arrozcomfeijao.View.UploadFoto" />
-        <activity android:name="com.example.arrozcomfeijao.View.PrincipalAdmin" />
+        <activity android:name="com.example.arrozcomfeijao.View.PrincipalGerente" />
         <activity android:name="com.example.arrozcomfeijao.View.CadastroFuncionario" />
     </application>
 

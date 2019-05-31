@@ -124,17 +124,17 @@
             android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-            <RadioButton
-                android:id="@+id/rbAdmin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Administrador" />
+                <RadioButton
+                    android:id="@+id/rbGerente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gerente" />
 
-            <RadioButton
-                android:id="@+id/rbAtend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Atendente" />
+                <RadioButton
+                    android:id="@+id/rbGarcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Garçon" />
 
         </RadioGroup>
 
@@ -143,10 +143,10 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/rbFemale"
+                    android:id="@+id/rbCozinheiro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Feminino" />
+                    android:text="Cozinheiro" />
 
                 <RadioButton
                     android:id="@+id/rbMale"

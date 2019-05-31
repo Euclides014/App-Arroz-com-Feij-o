@@ -11,33 +11,13 @@ public class RefFirebase {
     private static FirebaseFirestore referenceStore;
     private static StorageReference referenceStorage;
 
-    public static FirebaseFirestore getFirebaseStoreCliente(){
+    public static FirebaseFirestore getFirebaseStore(){
         if (referenceStore == null){
             referenceStore = FirebaseFirestore.getInstance();
         }
         return referenceStore;
     }
 
-    public static FirebaseFirestore getFirebaseStoreGarcon(){
-        if (referenceStore == null){
-            referenceStore = FirebaseFirestore.getInstance();
-        }
-        return referenceStore;
-    }
-
-    public static FirebaseFirestore getFirebaseStoreCozinheiro(){
-        if (referenceStore == null){
-            referenceStore = FirebaseFirestore.getInstance();
-        }
-        return referenceStore;
-    }
-
-    public static FirebaseFirestore getFirebaseStoreGerente(){
-        if (referenceStore == null){
-            referenceStore = FirebaseFirestore.getInstance();
-        }
-        return referenceStore;
-    }
 
     public static FirebaseAuth getFirebaseAuth(){
         if (referenceAuth == null){

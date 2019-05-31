@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.example.arrozcomfeijao.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class PrincipalFuncionario extends AppCompatActivity {
+public class PrincipalGarcon extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
 
@@ -45,20 +45,20 @@ public class PrincipalFuncionario extends AppCompatActivity {
     }
 
     private void uploadFotoPerfil(){
-        Intent intent = new Intent(PrincipalFuncionario.this, UploadFoto.class);
+        Intent intent = new Intent(PrincipalGarcon.this, UploadFoto.class);
         startActivity(intent);
 
     }
 
     private void verMeuPerfil(){
-        Intent intent = new Intent(PrincipalFuncionario.this, MeuPerfil.class);
+        Intent intent = new Intent(PrincipalGarcon.this, MeuPerfil.class);
         startActivity(intent);
         finish();
     }
 
     private void deslogarUsuario(){
         autenticacao.signOut();
-        Intent intent = new Intent(PrincipalFuncionario.this, Login.class);
+        Intent intent = new Intent(PrincipalGarcon.this, Login.class);
         startActivity(intent);
         finish();
     }
